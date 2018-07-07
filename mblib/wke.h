@@ -1110,7 +1110,7 @@ WKE_FOR_EACH_DEFINE_FUNCTION(WKE_DEFINE_ITERATOR0, WKE_DEFINE_ITERATOR1, WKE_DEF
 
 typedef void (WKE_CALL_TYPE *FN_wkeInitializeEx)(const wkeSettings* settings);
 
-__declspec(selectany) const wchar_t* kWkeDllPath = L"node.dll";
+extern const wchar_t *kWkeDllPath;
 
 inline void wkeSetWkeDllPath(const wchar_t* dllPath)
 {

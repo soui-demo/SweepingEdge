@@ -38,7 +38,7 @@ HEADERS += MainDlg.h \
            tabctrlex/SEditEx.h \
            tabctrlex/SRelTabCtrl.h \
            tabctrlex/TargetData.h \
-           /mblib/wke.h
+
 SOURCES += MainDlg.cpp \
            SMiniblink.cpp \
            SouiInit.cpp \
