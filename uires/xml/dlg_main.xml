@@ -1,0 +1,39 @@
+﻿<SOUI name="filemgrWindow" title="@string/title" bigIcon="ICON_LOGO:32" minsize="720,320" maxInset="0,0,0,0" smallIcon="ICON_LOGO:16" width="1024" height="768" maxwith="600"  margin="5,3,5,7" Style="pop" wndType="normal" resizable="1" translucent="1" sendWheel2Hover="1">
+  <root>
+    <window pos="0,0,-0,-0" colorBorder="#8d4e23" margin="1,1,1,1" colorBkgnd="#ffffff">
+      <window pos="1,1,-1,-1" name="wndFrame">
+        <caption pos="0,2,-0,98" name="caption">         
+          <window pos="4,30,-4,@36">
+            <imgbtn name="btn_webnav_back"  tip="上一页" skin="skin.btn_bkex" pos="4,0,@36,@36">
+              <img pos="2,2,-2,-2" skin="skin.webnav_back"/>
+            </imgbtn>
+            <imgbtn name="btn_webnav_forward" tip="下一页" skin="skin.btn_bkex" pos="[4,0,@36,@36">
+              <img pos="2,2,-2,-2" skin="skin.webnav_next"/>
+            </imgbtn>
+            <imgbtn name="btn_webnav_home" tip="主页" skin="skin.btn_bkex" pos="[4,0,@36,@36">
+              <img pos="2,2,-2,-2" skin="skin.webnav_home"/>
+            </imgbtn>
+            <window pos="[4,3,-4,-3" skin="skin.webnav_addr" >
+              <editex name="edt_address" pos="1,0,-64,-0" margin="1,1,1,1" inset="2,2,2,2" colorBorder="#cccccc" cueText="键入URL地址访问，或键入关键字以搜索"/>
+              <imgbtn name="btn_refresh" skin="skin.webnav_refs" tip="刷新" pos="-64,1,@32，@32"/>
+              <imgbtn name="btn_goaddress" skin="skin.webnav_goto" tip="转到" pos="-32,1,@32，@32"/>
+            </window>
+          </window>
+          <text pos="4,4" text="@string/title"/>
+          <imgbtn name="btn_close" skin="skin.sysbtn_close" pos="-32,0" tip="close" animate="1"/>
+          <imgbtn name="btn_restore" skin="skin.sysbtn_restore"  pos="-62,0" show="0" animate="1" />
+          <imgbtn name="btn_max" skin="skin.sysbtn_max"  pos="-62,0" animate="1" />
+          <imgbtn name="btn_min" skin="skin_sysbtn_min" pos="-92,0" animate="1" />          
+          
+          <BrowserTabCtrl pos="5,-30,@100,@30" name="WebBrowserTab" tabDesiredSize="200" enableDrag="1">
+            <tabStyle name="webTabCtrl" skin="skin.webtab"/>
+            <newBtnStyle size="30,30" skin="skin.webtab.add" tip="新建选项卡"/>            
+            <titleStyle pos="30,|,-20,@20" dotted="1" name="title" offset="0,-0.5" show="1"/>
+            <closeBtnStyle pos="-4,18" offset="-1,-0.5" skin="skin.tablist_close"/>
+          </BrowserTabCtrl>
+        </caption>
+        <RelTabCtrl name="tab_webpage" pos="5,[,-5,-5" curSel="0" focusable="0" animateSteps="0"  tabHeight="0"/>
+      </window>
+    </window>
+  </root>
+</SOUI>

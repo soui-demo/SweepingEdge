@@ -1,0 +1,39 @@
+﻿<resource>
+  <UIDEF>
+    <file name="XML_INIT" path="uidef\init.xml"/>
+  </UIDEF>
+  <LAYOUT>
+    <file name="XML_MAINWND" path="xml\dlg_main.xml"/>
+    <file name="XML_MAINDROPS" path="xml\Xml_BrowserDrop.xml"  />
+  </LAYOUT>
+  
+  <values>
+  	<file name="string" path="values\string.xml"/>
+  	<file name="color" path="values\color.xml"/>
+  	<file name="skin" path="values\skin.xml"/>
+  </values>
+  <PNG>
+    <file name="ID_SYSBTN_CLOSE" path="image\sysbtn_close.png"/>
+    <file name="ID_SYSBTN_MAX" path="image\sysbtn_max.png"/>
+    <file name="ID_SYSBTN_MIN" path="image\sysbtn_min.png"/>
+    <file name="ID_SYSBTN_RESTORE" path="image\sysbtn_restore.png"/>
+    <file name="ID_SYSBTN_MENU" path="image\sysbtn_memu.png"/>
+    <file name="ID_WEBTAB_ADD" path="image\WebTab_Add.png"/>
+    <file name="ID_WEBTAB" path="image\webTab_bk.png"/>
+    <file name="ID_TABBTN_CLOSE" path="image\tabbtn_del.png"/>
+    <file name="ID_TABLST_CLOSE" path="image\tabbtn_lst_del.png"/>    
+  </PNG>
+  <NAVBAR>
+    <file name="IMG_BTN_BACK" path="image\btn_back.png"/>
+    <file name="IMG_BTN_NEXT" path="image\btn_next.png"/>
+    <file name="IMG_BTN_HOME" path="image\btn_home.png"/>
+    <file name="IMG_BTN_GOTO" path="image\btn_goaddr.png"/>
+    <file name="IMG_BTN_REFS" path="image\btn_refresh.png"/>
+    <file name="ID_BTNBKEX" path="image\quickbar_sel_bks.png"/>
+  </NAVBAR>
+  <IMG>
+  </IMG>
+  <ICON>
+    <file name="ICON_LOGO"  path="image\Broom.ico"/>
+  </ICON>
+</resource>

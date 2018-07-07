@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<skin>
+  <imglist name="skin.sysbtn_close"	src="PNG:ID_SYSBTN_CLOSE" states="3"/>
+  <imglist name="skin.sysbtn_max"	src="PNG:ID_SYSBTN_MAX" states="3"/>
+  <imglist name="skin_sysbtn_min"	src="PNG:ID_SYSBTN_MIN" states="3"/>
+  <imglist name="skin.sysbtn_restore"	src="PNG:ID_SYSBTN_RESTORE" states="3"/>
+  <imglist name="skin_sysbtn_menu"	src="PNG:ID_SYSBTN_MENU" states="3"/>
+  <imglist name="skin.webtab.add"	src="PNG:ID_WEBTAB_ADD" states="3"/>
+  <imgframe name="skin.webtab"	src="PNG:ID_WEBTAB" states="3"  margin-x="2" margin-y="2"/>
+  <imglist name="skin.tabbtn_close"	src="PNG:ID_TABBTN_CLOSE" states="3"/>
+  <imglist name="skin.tablist_close"	src="PNG:ID_TABLST_CLOSE" states="3"/>
+
+  <imglist name="skin.webnav_back"	src="NAVBAR:IMG_BTN_BACK" states="1"/>
+  <imglist name="skin.webnav_next"	src="NAVBAR:IMG_BTN_NEXT" states="1"/>
+  <imglist name="skin.webnav_home"	src="NAVBAR:IMG_BTN_HOME" states="1"/>
+  <imglist name="skin.webnav_addr"	src="NAVBAR:IMG_EDT_ADDR" states="3"/>
+  <imglist name="skin.webnav_goto"	src="NAVBAR:IMG_BTN_GOTO" states="3"/>
+  <imglist name="skin.webnav_refs"	src="NAVBAR:IMG_BTN_REFS" states="3"/>
+  <imgframe name="skin.btn_bkex"	src="NAVBAR:ID_BTNBKEX"  states="3" margin="3,3,3,3"/>
+</skin>
