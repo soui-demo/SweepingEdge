@@ -13,14 +13,14 @@
             <imgbtn name="btn_webnav_home" tip="主页" skin="skin.btn_bkex" pos="[4,0,@36,@36">
               <img pos="2,2,-2,-2" skin="skin.webnav_home"/>
             </imgbtn>
-            <window pos="[4,3,-4,-3" skin="skin.webnav_addr" >
-              <editex name="edt_address" pos="1,0,-64,-0" margin="1,1,1,1" inset="2,2,2,2" colorBorder="#cccccc" cueText="键入URL地址访问，或键入关键字以搜索"/>
-              <imgbtn name="btn_refresh" skin="skin.webnav_refs" tip="刷新" pos="-64,1,@32，@32"/>
-              <imgbtn name="btn_goaddress" skin="skin.webnav_goto" tip="转到" pos="-32,1,@32，@32"/>
+            <window pos="[4,3,-4,-3" skin="skin.webnav_addr" layout="hbox">
+              <editex name="edt_address" size="0,-2" weight="1" margin="1,1,1,1" inset="2,2,2,2" colorBorder="#cccccc" cueText="键入URL地址访问，或键入关键字以搜索"/>
+              <imgbtn name="btn_refresh" size="-1,-1" skin="skin.webnav_refs" tip="刷新"/>
+              <imgbtn name="btn_goaddress" size="-1,-1" skin="skin.webnav_goto" tip="转到"/>
             </window>
           </window>
           <text pos="4,4" text="@string/title"/>
-          <imgbtn name="btn_close" skin="skin.sysbtn_close" pos="-32,0" tip="close" animate="1"/>
+          <imgbtn name="btn_close" skin="_skin.sys.btn.close" pos="-32,0" tip="close" animate="1"/>
           <imgbtn name="btn_restore" skin="skin.sysbtn_restore"  pos="-62,0" show="0" animate="1" />
           <imgbtn name="btn_max" skin="skin.sysbtn_max"  pos="-62,0" animate="1" />
           <imgbtn name="btn_min" skin="skin_sysbtn_min" pos="-92,0" animate="1" />          
