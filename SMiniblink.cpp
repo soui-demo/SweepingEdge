@@ -55,8 +55,7 @@ namespace SOUI
 	}
 	wkeWebView wkeCreateViewCallback(wkeWebView webView, void* param, wkeNavigationType navigationType, const wkeString url, const wkeWindowFeatures* windowFeatures)
 	{
-		//int abc = 110l;
-		return webView;
+		return NULL;
 	}
 	void wkeTitleChangedCallback(wkeWebView webView, void* param, const wkeString title)
 	{
