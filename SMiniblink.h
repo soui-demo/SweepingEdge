@@ -21,6 +21,7 @@ namespace SOUI
 #define EVT_WKE_BEGIN (EVT_EXTERNAL_BEGIN + 500)
 #define EVT_WKE_UPDATATITLE (EVT_WKE_BEGIN + 1)
 #define EVT_WKE_UPDATAURL (EVT_WKE_BEGIN + 2)
+#define EVT_WKE_NEW_NAV (EVT_WKE_BEGIN + 3)
 	class EventBrowserTitleChanged : public TplEventArgs < EventBrowserTitleChanged >
 	{
 		SOUI_CLASS_NAME(EventBrowserTitleChanged, L"on_title_changed")
@@ -47,6 +48,21 @@ namespace SOUI
 		LPCTSTR		pszUrl;
 		int			iId;
 	};
+
+	class EventBrowserNewNav : public TplEventArgs < EventBrowserNewNav >
+	{
+		SOUI_CLASS_NAME(EventBrowserNewNav, L"on_new_nav")
+	public:
+		EventBrowserNewNav(SWindow *pSender) :TplEventArgs<EventBrowserNewNav>(pSender), pRetView(NULL)
+		{
+		}
+		enum {
+			EventID = EVT_WKE_NEW_NAV
+		};
+		LPCTSTR		pszUrl;
+		int			iId;
+		wkeWebView pRetView;
+	};
     class SWkeWebkit : public SWindow
     {
         SOUI_CLASS_NAME(SWkeWebkit, L"wkeWebkit")
@@ -64,6 +80,7 @@ namespace SOUI
 		bool DownloadCallback(wkeWebView webView, const char* url);
 		void URLChangedCallback(wkeWebView webView, const wkeString url);
 		void TitleChangedCallback(wkeWebView webView, const wkeString url);
+		wkeWebView CreateViewCallback(wkeWebView webView, wkeNavigationType navigationType, const wkeString url, const wkeWindowFeatures* windowFeatures);
 		void StopLoading();
 		bool GoBack();
 		bool GoForward();

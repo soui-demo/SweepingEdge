@@ -6,36 +6,37 @@
 #pragma comment(lib,"msimg32.lib")
 namespace SOUI
 {
-    //////////////////////////////////////////////////////////////////////////
-    // SWkeLoader
-   
+	//////////////////////////////////////////////////////////////////////////
+	// SWkeLoader
 
-    SWkeLoader::SWkeLoader() 
-    {     
+
+	SWkeLoader::SWkeLoader()
+	{
 		wkeInit();
-    }
+	}
 
 
-    SWkeLoader::~SWkeLoader()
-    {
+	SWkeLoader::~SWkeLoader()
+	{
 		wkeShutdown();
-    }
-	
-    //////////////////////////////////////////////////////////////////////////
-    // SWkeWebkit
-    
-    SWkeWebkit::SWkeWebkit(void):m_pWebView(NULL)
-    {
-		GetEventSet()->addEvent(EVENTID(EventBrowserTitleChanged));
-    }
+	}
 
-    SWkeWebkit::~SWkeWebkit(void)
-    {
-    }
+	//////////////////////////////////////////////////////////////////////////
+	// SWkeWebkit
+
+	SWkeWebkit::SWkeWebkit(void) :m_pWebView(NULL)
+	{
+		GetEventSet()->addEvent(EVENTID(EventBrowserTitleChanged));
+		GetEventSet()->addEvent(EVENTID(EventBrowserNewNav));
+	}
+
+	SWkeWebkit::~SWkeWebkit(void)
+	{
+	}
 	//typedef void(*wkeURLChangedCallback)(wkeWebView webView, void* param, const wkeString url);
 	void wkeURLChangedCallback(wkeWebView webView, void * param, const wkeString url)
 	{
-		((SWkeWebkit*)param)->URLChangedCallback(webView,url);
+		((SWkeWebkit*)param)->URLChangedCallback(webView, url);
 	}
 	//typedef void(*wkePaintUpdatedCallback)(wkeWebView webView, void* param, const HDC hdc, int x, int y, int cx, int cy);
 	void wkePaintUpdatedCallback(wkeWebView webView, void* param, const HDC hdcSrc, int x, int y, int cx, int cy)
@@ -47,41 +48,41 @@ namespace SOUI
 		rcInvalid.OffsetRect(rcClient.TopLeft());
 		_THIS->InvalidateRect(rcInvalid);
 	}
-	
+
 	void wkeLoadUrlEndCallback(wkeWebView webView, void* param, const char *url, void *job, void* buf, int len)
 	{
-		char *html =static_cast<char*>(buf);
-		int abcdef= html[0];
+		char *html = static_cast<char*>(buf);
+		int abcdef = html[0];
 	}
 	wkeWebView wkeCreateViewCallback(wkeWebView webView, void* param, wkeNavigationType navigationType, const wkeString url, const wkeWindowFeatures* windowFeatures)
 	{
-		return NULL;
+		return ((SWkeWebkit*)param)->CreateViewCallback(webView, navigationType, url, windowFeatures);;
 	}
 	void wkeTitleChangedCallback(wkeWebView webView, void* param, const wkeString title)
 	{
-		((SWkeWebkit*)param)->TitleChangedCallback(webView,title);
+		((SWkeWebkit*)param)->TitleChangedCallback(webView, title);
 	}
 
 	bool wkeDownloadCallback(wkeWebView webView, void* param, const char* url)
-	{		
+	{
 		return ((SWkeWebkit*)param)->DownloadCallback(webView, url);
 	}
 
 	void SWkeWebkit::BindCallBackFunToWeb()
 	{
 		//URLChanged
-		wkeOnURLChanged(m_pWebView, wkeURLChangedCallback,this);
-		wkeOnTitleChanged(m_pWebView,wkeTitleChangedCallback,this);
+		wkeOnURLChanged(m_pWebView, wkeURLChangedCallback, this);
+		wkeOnTitleChanged(m_pWebView, wkeTitleChangedCallback, this);
 		//Updated
 		wkeOnPaintUpdated(m_pWebView, wkePaintUpdatedCallback, this);
 		//wkeOnLoadUrlEnd(m_pWebView, wkeLoadUrlEndCallback, this);
-		wkeOnCreateView(m_pWebView, wkeCreateViewCallback,this);
+		wkeOnCreateView(m_pWebView, wkeCreateViewCallback, this);
 		wkeOnDownload(m_pWebView, wkeDownloadCallback, this);
 	}
 
-	void SWkeWebkit::BindJsToWke(const char* jsFunName, wkeJsNativeFunction nativeFun,int argc,void *evtbinder)
+	void SWkeWebkit::BindJsToWke(const char* jsFunName, wkeJsNativeFunction nativeFun, int argc, void *evtbinder)
 	{
-		wkeJsBindFunction(jsFunName, nativeFun, evtbinder,2);
+		wkeJsBindFunction(jsFunName, nativeFun, evtbinder, 2);
 	}
 
 	SOUI::SStringW SWkeWebkit::RunJSW(SStringT strValue)
@@ -122,20 +123,43 @@ namespace SOUI
 
 	void SWkeWebkit::URLChangedCallback(wkeWebView webView, const wkeString url)
 	{
-		SStringT strUrl = wkeToStringW(url);		
+		SStringT strUrl = wkeToStringW(url);
 		EventBrowserUrlChanged evt(this);
-		evt.pszUrl= strUrl;
+		evt.pszUrl = strUrl;
 		evt.iId = GetID();
 		FireEvent(evt);
-	}	
+	}
 
 	void SWkeWebkit::TitleChangedCallback(wkeWebView webView, const wkeString url)
 	{
-		SStringT strUrl = wkeToStringW(url);		
+		SStringT strUrl = wkeToStringW(url);
 		EventBrowserTitleChanged evt(this);
 		evt.pszTitle = strUrl;
 		evt.iId = GetID();
 		FireEvent(evt);
+	}
+
+	wkeWebView SWkeWebkit::CreateViewCallback(wkeWebView webView, wkeNavigationType navigationType, const wkeString url, const wkeWindowFeatures * windowFeatures)
+	{
+		SStringT strUrl = wkeToStringW(url);
+		switch (navigationType)
+		{
+		case WKE_NAVIGATION_TYPE_LINKCLICK:
+		case WKE_NAVIGATION_TYPE_FORMSUBMITTE:
+		case WKE_NAVIGATION_TYPE_BACKFORWARD:
+		case WKE_NAVIGATION_TYPE_RELOAD:
+		case WKE_NAVIGATION_TYPE_FORMRESUBMITT:
+		case WKE_NAVIGATION_TYPE_OTHER:
+		default:
+
+			break;
+		}
+		EventBrowserNewNav newNav(this);
+		newNav.pszUrl = strUrl;
+		FireEvent(newNav);
+		if (newNav.pRetView)
+			return newNav.pRetView;
+		return NULL;
 	}
 
 	void SWkeWebkit::StopLoading()
@@ -163,38 +187,38 @@ namespace SOUI
 		return wkeCanGoForward(m_pWebView);
 	}
 
-    void SWkeWebkit::OnPaint(IRenderTarget *pRT)
-    {
+	void SWkeWebkit::OnPaint(IRenderTarget *pRT)
+	{
 		CRect rcClip;
 		pRT->GetClipBox(&rcClip);
 		CRect rcClient;
 		GetClientRect(&rcClient);
 		CRect rcInvalid;
 		rcInvalid.IntersectRect(&rcClip, &rcClient);
-		HDC hdc = pRT->GetDC();		
+		HDC hdc = pRT->GetDC();
 		{
 			BLENDFUNCTION bf = { AC_SRC_OVER,0,GetStyle().m_byAlpha,AC_SRC_ALPHA };
-			AlphaBlend(hdc, rcInvalid.left, rcInvalid.top, rcInvalid.Width(), rcInvalid.Height(),wkeGetViewDC((wkeWebView) m_pWebView), rcInvalid.left - rcClient.left, rcInvalid.top - rcClient.top, rcInvalid.Width(), rcInvalid.Height(), bf);
+			AlphaBlend(hdc, rcInvalid.left, rcInvalid.top, rcInvalid.Width(), rcInvalid.Height(), wkeGetViewDC((wkeWebView)m_pWebView), rcInvalid.left - rcClient.left, rcInvalid.top - rcClient.top, rcInvalid.Width(), rcInvalid.Height(), bf);
 		}
 		pRT->ReleaseDC(hdc);
-    }
+	}
 
-    void SWkeWebkit::OnSize( UINT nType, CSize size )
-    {
-        __super::OnSize(nType,size);
-        wkeResize(m_pWebView,size.cx,size.cy);
-    }
+	void SWkeWebkit::OnSize(UINT nType, CSize size)
+	{
+		__super::OnSize(nType, size);
+		wkeResize(m_pWebView, size.cx, size.cy);
+	}
 
-	int SWkeWebkit::OnCreate( void * )
-    {
-        m_pWebView =wkeCreateWebView();
+	int SWkeWebkit::OnCreate(void *)
+	{
+		m_pWebView = wkeCreateWebView();
 		wkeSetHandle(m_pWebView, this->GetContainer()->GetHostHwnd());
-        if(!m_pWebView) return 1;
+		if (!m_pWebView) return 1;
 		//wkeSetNavigationToNewWindowEnable((wkeWebView)m_pWebView, false);
 		BindCallBackFunToWeb();
-		if(!m_strUrl.IsEmpty())
-			wkeLoadURL(m_pWebView, S_CT2A(m_strUrl, CP_UTF8));		
-        return 0;
+		if (!m_strUrl.IsEmpty())
+			wkeLoadURL(m_pWebView, S_CT2A(m_strUrl, CP_UTF8));
+		return 0;
 	}
 
 	void SWkeWebkit::OnDestroy()
@@ -205,7 +229,7 @@ namespace SOUI
 			wkeDestroyWebView((wkeWebView)m_pWebView);
 		}
 	}
-	LRESULT SWkeWebkit::OnMouseEvent( UINT message, WPARAM wParam,LPARAM lParam)
+	LRESULT SWkeWebkit::OnMouseEvent(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		if (message == WM_LBUTTONDOWN || message == WM_MBUTTONDOWN || message == WM_RBUTTONDOWN)
 		{
@@ -220,8 +244,8 @@ namespace SOUI
 		CRect rcClient;
 		GetClientRect(&rcClient);
 
-		int x = GET_X_LPARAM(lParam) -rcClient.left;
-		int y = GET_Y_LPARAM(lParam) -rcClient.top;
+		int x = GET_X_LPARAM(lParam) - rcClient.left;
+		int y = GET_Y_LPARAM(lParam) - rcClient.top;
 
 		unsigned int flags = 0;
 
@@ -236,18 +260,18 @@ namespace SOUI
 			flags |= WKE_MBUTTON;
 		if (wParam & MK_RBUTTON)
 			flags |= WKE_RBUTTON;
-		
+
 		SetMsgHandled(wkeFireMouseEvent(m_pWebView, message, x, y, flags));
 		return 0;
 	}
 
-	LRESULT SWkeWebkit::OnKeyDown( UINT uMsg, WPARAM wParam,LPARAM lParam )
+	LRESULT SWkeWebkit::OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		unsigned int flags = 0;
 		if (HIWORD(lParam) & KF_REPEAT)
 			flags |= WKE_REPEAT;
 		if (HIWORD(lParam) & KF_EXTENDED)
-			flags |= WKE_EXTENDED;		
+			flags |= WKE_EXTENDED;
 		if (wParam == VK_F12)
 		{
 			TCHAR szCurrentDir[MAX_PATH] = { 0 };
@@ -258,11 +282,11 @@ namespace SOUI
 			SStringA inspectorPath = S_CT2A(LR"(F:\008\SweepingEdge\Release\front_end\inspector.html)", CP_UTF8);
 			wkeSetDebugConfig(m_pWebView, "showDevTools", inspectorPath);
 		}
-		SetMsgHandled(wkeFireKeyDownEvent(m_pWebView,wParam, flags, false));
+		SetMsgHandled(wkeFireKeyDownEvent(m_pWebView, wParam, flags, false));
 		return 0;
 	}
 
-	LRESULT SWkeWebkit::OnKeyUp( UINT uMsg, WPARAM wParam,LPARAM lParam )
+	LRESULT SWkeWebkit::OnKeyUp(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		unsigned int flags = 0;
 		if (HIWORD(lParam) & KF_REPEAT)
@@ -270,11 +294,11 @@ namespace SOUI
 		if (HIWORD(lParam) & KF_EXTENDED)
 			flags |= WKE_EXTENDED;
 
-		SetMsgHandled(wkeFireKeyUpEvent(m_pWebView,wParam, flags, false));
+		SetMsgHandled(wkeFireKeyUpEvent(m_pWebView, wParam, flags, false));
 		return 0;
 	}
 
-	LRESULT SWkeWebkit::OnMouseWheel( UINT uMsg, WPARAM wParam,LPARAM lParam )
+	LRESULT SWkeWebkit::OnMouseWheel(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		POINT pt;
 		pt.x = GET_X_LPARAM(lParam);
@@ -302,13 +326,13 @@ namespace SOUI
 			flags |= WKE_RBUTTON;
 
 		//flags = wParam;
-		
+
 		SetMsgHandled(wkeFireMouseWheelEvent(m_pWebView, pt.x, pt.y, delta, flags));
 
 		return 0;
 	}
 
-	LRESULT SWkeWebkit::OnChar( UINT uMsg, WPARAM wParam,LPARAM lParam )
+	LRESULT SWkeWebkit::OnChar(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		unsigned int charCode = wParam;
 		unsigned int flags = 0;
@@ -319,11 +343,11 @@ namespace SOUI
 
 		//flags = HIWORD(lParam);
 
-		SetMsgHandled(wkeFireKeyPressEvent(m_pWebView,charCode, flags, false));
+		SetMsgHandled(wkeFireKeyPressEvent(m_pWebView, charCode, flags, false));
 		return 0;
 	}
 
-	LRESULT SWkeWebkit::OnImeStartComposition( UINT uMsg, WPARAM wParam,LPARAM lParam )
+	LRESULT SWkeWebkit::OnImeStartComposition(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		wkeRect caret = wkeGetCaret(m_pWebView);
 
@@ -340,21 +364,21 @@ namespace SOUI
 		form.rcArea.left = caret.x + rcClient.left;
 		form.rcArea.right = caret.x + caret.w + rcClient.left;
 		COMPOSITIONFORM compForm;
-		compForm.ptCurrentPos=form.ptCurrentPos;
-		compForm.rcArea=form.rcArea;
-		compForm.dwStyle=CFS_POINT;
+		compForm.ptCurrentPos = form.ptCurrentPos;
+		compForm.rcArea = form.rcArea;
+		compForm.dwStyle = CFS_POINT;
 
-		HWND hWnd=GetContainer()->GetHostHwnd();
+		HWND hWnd = GetContainer()->GetHostHwnd();
 		HIMC hIMC = ImmGetContext(hWnd);
 		ImmSetCandidateWindow(hIMC, &form);
-		ImmSetCompositionWindow(hIMC,&compForm);
+		ImmSetCompositionWindow(hIMC, &compForm);
 		ImmReleaseContext(hWnd, hIMC);
 		return 0;
 	}
 
 	void SWkeWebkit::OnSetFocus(SWND wndOld)
 	{
-	    __super::OnSetCursor(wndOld);
+		__super::OnSetCursor(wndOld);
 		wkeSetFocus(m_pWebView);
 	}
 
@@ -362,12 +386,12 @@ namespace SOUI
 	{
 		wkeKillFocus(m_pWebView);
 		__super::OnKillFocus(wndFocus);
-	}	
+	}
 
-	BOOL SWkeWebkit::OnSetCursor( const CPoint &pt )
+	BOOL SWkeWebkit::OnSetCursor(const CPoint &pt)
 	{
-		int curInf=wkeGetCursorInfoType((wkeWebView)m_pWebView);
-		
+		int curInf = wkeGetCursorInfoType((wkeWebView)m_pWebView);
+
 		HCURSOR hCursor = GETRESPROVIDER->LoadCursor(wkeCursor(curInf));
 		SetCursor(hCursor);
 		return TRUE;
@@ -496,10 +520,10 @@ namespace SOUI
 		return curResStr;
 	}
 
-	BOOL SWkeWebkit::OnAttrUrl( SStringW strValue, BOOL bLoading )
+	BOOL SWkeWebkit::OnAttrUrl(SStringW strValue, BOOL bLoading)
 	{
-		m_strUrl=strValue;
-		if(!bLoading&&m_pWebView) 
+		m_strUrl = strValue;
+		if (!bLoading&&m_pWebView)
 			wkeLoadURL(m_pWebView, S_CT2A(m_strUrl, CP_UTF8));
 		return !bLoading;
 	}
