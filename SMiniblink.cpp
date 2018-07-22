@@ -279,7 +279,8 @@ namespace SOUI
 			LPTSTR lpInsertPos = _tcsrchr(szCurrentDir, _T('\\'));
 			_tcscpy(lpInsertPos + 1, _T("\0"));
 			SStringT strCurDir = szCurrentDir;
-			SStringA inspectorPath = S_CT2A(_T("(F:\\008\\SweepingEdge\\Release\\front_end\\inspector.html)"), CP_UTF8);
+			
+			SStringA inspectorPath = S_CT2A(SApplication::getSingleton().GetAppDir()+_T("\\mblib\\front_end\\inspector.html"), CP_UTF8);
 			wkeSetDebugConfig(m_pWebView, "showDevTools", inspectorPath);
 		}
 		SetMsgHandled(wkeFireKeyDownEvent(m_pWebView, wParam, flags, false));
