@@ -2,7 +2,7 @@
 class CIDropSource :public IDropSource
 {
 private:
-	ULONG m_lRefCount;
+	volatile LONG m_lRefCount;
 public:
 	CIDropSource();
 	HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void ** ppvObject);
@@ -14,7 +14,7 @@ public:
 class CIDataObject :public IDataObject
 {
 private:
-	ULONG m_lRefCount;
+	volatile LONG m_lRefCount;
 public:
 	CIDataObject();
 	HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void ** ppvObject);
@@ -26,7 +26,7 @@ public:
 class CIDropTarget :public IDropTarget
 {
 private:
-	ULONG m_lRefCount;
+	volatile LONG m_lRefCount;
 public:
 	CIDropTarget();
 	HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void ** ppvObject);

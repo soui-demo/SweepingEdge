@@ -225,7 +225,7 @@ namespace SOUI
 	{
 		if (m_pWebView)
 		{
-			wkeSetHandle(m_pWebView, nullptr);
+			wkeSetHandle(m_pWebView, NULL);
 			wkeDestroyWebView((wkeWebView)m_pWebView);
 		}
 	}
@@ -279,7 +279,7 @@ namespace SOUI
 			LPTSTR lpInsertPos = _tcsrchr(szCurrentDir, _T('\\'));
 			_tcscpy(lpInsertPos + 1, _T("\0"));
 			SStringT strCurDir = szCurrentDir;
-			SStringA inspectorPath = S_CT2A(LR"(F:\008\SweepingEdge\Release\front_end\inspector.html)", CP_UTF8);
+			SStringA inspectorPath = S_CT2A(_T("(F:\\008\\SweepingEdge\\Release\\front_end\\inspector.html)"), CP_UTF8);
 			wkeSetDebugConfig(m_pWebView, "showDevTools", inspectorPath);
 		}
 		SetMsgHandled(wkeFireKeyDownEvent(m_pWebView, wParam, flags, false));

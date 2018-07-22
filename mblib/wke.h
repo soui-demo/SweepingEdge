@@ -60,7 +60,7 @@ typedef unsigned short wchar_t;
 #endif
 #endif
 
-#include <stdbool.h>
+//#include <stdbool.h>
 
 #if defined(__cplusplus)
 #define WKE_EXTERN_C extern "C" 
