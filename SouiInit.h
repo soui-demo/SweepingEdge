@@ -14,7 +14,7 @@ class CSouiLoader
 	SComMgr *pComMgr;
 public:
 	//通过过传入一个ISystemObjectRegister对像来注册用户控件，其余参数和SApplication的参数一致
-	CSouiLoader(HINSTANCE hInst,ISystemObjectRegister *pUserObjRegister=new SUserObjectDefaultRegister(), LPCTSTR pszHostClassName = _T("SOUIHOST"), ISystemObjectRegister *pSysObjRegister = new SObjectDefaultRegister()) 
+	CSouiLoader(HINSTANCE hInst,ISystemObjectRegister *pUserObjRegister=new SUserObjectDefaultRegister(), LPCTSTR pszHostClassName = _T("SOUIHOST")) 
 		:theApp(NULL),pComMgr(NULL)
 	{		
 		pComMgr = new SComMgr;
@@ -25,7 +25,7 @@ public:
 		bLoaded = pComMgr->CreateImgDecoder((IObjRef**)&pImgDecoderFactory);
 		SASSERT_FMT(bLoaded, _T("load interface [%s] failed!"), _T("imgdecoder"));
 		pRenderFactory->SetImgDecoderFactory(pImgDecoderFactory);
-		theApp = new SApplication(pRenderFactory, hInst, pszHostClassName, pSysObjRegister);
+		theApp = new SApplication(pRenderFactory, hInst, pszHostClassName);
 
 		
 
