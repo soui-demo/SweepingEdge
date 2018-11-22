@@ -28,6 +28,7 @@ namespace SOUI
 	{
 		GetEventSet()->addEvent(EVENTID(EventBrowserTitleChanged));
 		GetEventSet()->addEvent(EVENTID(EventBrowserNewNav));
+		m_bFocusable = true;
 	}
 
 	SWkeWebkit::~SWkeWebkit(void)
