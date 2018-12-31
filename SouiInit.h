@@ -14,7 +14,7 @@ class CSouiLoader
 	SComMgr *pComMgr;
 public:
 	//通过过传入一个ISystemObjectRegister对像来注册用户控件，其余参数和SApplication的参数一致
-	CSouiLoader(HINSTANCE hInst,ISystemObjectRegister *pUserObjRegister=new SUserObjectDefaultRegister(), LPCTSTR pszHostClassName = _T("SOUIHOST")) 
+	CSouiLoader(HINSTANCE hInst,ISystemObjectRegister &pUserObjRegister=SUserObjectDefaultRegister(), LPCTSTR pszHostClassName = _T("SOUIHOST")) 
 		:theApp(NULL),pComMgr(NULL)
 	{		
 		pComMgr = new SComMgr;
@@ -30,11 +30,10 @@ public:
 		
 
 		//注册用户自定义的东西
-		pUserObjRegister->RegisterLayouts(theApp);
-		pUserObjRegister->RegisterSkins(theApp);
-		pUserObjRegister->RegisterWindows(theApp);
-		pUserObjRegister->RegisterInterpolator(theApp);
-		pUserObjRegister->Release();
+		pUserObjRegister.RegisterLayouts(theApp);
+		pUserObjRegister.RegisterSkins(theApp);
+		pUserObjRegister.RegisterWindows(theApp);
+		pUserObjRegister.RegisterInterpolator(theApp);		
 	}
 	~CSouiLoader()
 	{
