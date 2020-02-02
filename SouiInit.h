@@ -1,12 +1,9 @@
-//用户控件/皮肤/布局/插值算法注册类
 class SUserObjectDefaultRegister : public TObjRefImpl<ISystemObjectRegister>
 {
 public:
 	void RegisterWindows(SObjectFactoryMgr *objFactory) const;
-	//void RegisterSkins(SObjectFactoryMgr *objFactory) const;
-	//void RegisterLayouts(SObjectFactoryMgr *objFactory) const;
-	//void RegisterInterpolator(SObjectFactoryMgr *objFactory) const;
 };
+
 //Soui 加载器
 class CSouiLoader
 {

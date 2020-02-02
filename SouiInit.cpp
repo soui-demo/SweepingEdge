@@ -109,7 +109,7 @@ void InitUserRes(SApplication * theApp, SComMgr *pComMgr)
 	theApp->AddResProvider(pResProvider);
 }
 
-void SUserObjectDefaultRegister::RegisterWindows(SObjectFactoryMgr * objFactory)
+void SUserObjectDefaultRegister::RegisterWindows(SObjectFactoryMgr * objFactory) const
 {	
 #define RegWnd(wndClass) objFactory->TplRegisterFactory<wndClass>();
 	RegWnd(SBrowserTabCtrl)	

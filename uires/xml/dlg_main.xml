@@ -13,7 +13,7 @@
             <imgbtn name="btn_webnav_home" tip="主页" skin="skin.btn_bkex" pos="[4,0,@36,@36">
               <img pos="2,2,-2,-2" skin="skin.webnav_home"/>
             </imgbtn>
-            <window pos="[4,3,-4,-3" skin="skin.webnav_addr" layout="hbox">
+            <window pos="[4,3,-4,-3" layout="hbox">
               <editex name="edt_address" size="0,-2" weight="1" margin="1,1,1,1" inset="2,2,2,2" colorBorder="#cccccc" cueText="键入URL地址访问，或键入关键字以搜索"/>
               <imgbtn name="btn_refresh" size="-1,-1" skin="skin.webnav_refs" tip="刷新"/>
               <imgbtn name="btn_goaddress" size="-1,-1" skin="skin.webnav_goto" tip="转到"/>

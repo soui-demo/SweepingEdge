@@ -14,7 +14,6 @@
   <imglist name="skin.webnav_back"	src="NAVBAR:IMG_BTN_BACK" states="1"/>
   <imglist name="skin.webnav_next"	src="NAVBAR:IMG_BTN_NEXT" states="1"/>
   <imglist name="skin.webnav_home"	src="NAVBAR:IMG_BTN_HOME" states="1"/>
-  <imglist name="skin.webnav_addr"	src="NAVBAR:IMG_EDT_ADDR" states="3"/>
   <imglist name="skin.webnav_goto"	src="NAVBAR:IMG_BTN_GOTO" states="3"/>
   <imglist name="skin.webnav_refs"	src="NAVBAR:IMG_BTN_REFS" states="3"/>
   <imgframe name="skin.btn_bkex"	src="NAVBAR:ID_BTNBKEX"  states="3" margin="3,3,3,3"/>
