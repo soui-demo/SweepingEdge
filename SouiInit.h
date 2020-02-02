@@ -1,19 +1,19 @@
-//ÓÃ»§¿Ø¼ş/Æ¤·ô/²¼¾Ö/²åÖµËã·¨×¢²áÀà
+//ç”¨æˆ·æ§ä»¶/çš®è‚¤/å¸ƒå±€/æ’å€¼ç®—æ³•æ³¨å†Œç±»
 class SUserObjectDefaultRegister : public TObjRefImpl<ISystemObjectRegister>
 {
 public:
-	void RegisterWindows(SObjectFactoryMgr *objFactory);
-	//void RegisterSkins(SObjectFactoryMgr *objFactory);
-	//void RegisterLayouts(SObjectFactoryMgr *objFactory);
-	//void RegisterInterpolator(SObjectFactoryMgr *objFactory);
+	void RegisterWindows(SObjectFactoryMgr *objFactory) const;
+	//void RegisterSkins(SObjectFactoryMgr *objFactory) const;
+	//void RegisterLayouts(SObjectFactoryMgr *objFactory) const;
+	//void RegisterInterpolator(SObjectFactoryMgr *objFactory) const;
 };
-//Soui ¼ÓÔØÆ÷
+//Soui åŠ è½½å™¨
 class CSouiLoader
 {
 	SApplication *theApp;
 	SComMgr *pComMgr;
 public:
-	//Í¨¹ı¹ı´«ÈëÒ»¸öISystemObjectRegister¶ÔÏñÀ´×¢²áÓÃ»§¿Ø¼ş£¬ÆäÓà²ÎÊıºÍSApplicationµÄ²ÎÊıÒ»ÖÂ
+	//é€šè¿‡è¿‡ä¼ å…¥ä¸€ä¸ªISystemObjectRegisterå¯¹åƒæ¥æ³¨å†Œç”¨æˆ·æ§ä»¶ï¼Œå…¶ä½™å‚æ•°å’ŒSApplicationçš„å‚æ•°ä¸€è‡´
 	CSouiLoader(HINSTANCE hInst,ISystemObjectRegister &pUserObjRegister=SUserObjectDefaultRegister(), LPCTSTR pszHostClassName = _T("SOUIHOST")) 
 		:theApp(NULL),pComMgr(NULL)
 	{		
@@ -29,7 +29,7 @@ public:
 
 		
 
-		//×¢²áÓÃ»§×Ô¶¨ÒåµÄ¶«Î÷
+		//æ³¨å†Œç”¨æˆ·è‡ªå®šä¹‰çš„ä¸œè¥¿
 		pUserObjRegister.RegisterLayouts(theApp);
 		pUserObjRegister.RegisterSkins(theApp);
 		pUserObjRegister.RegisterWindows(theApp);
@@ -53,7 +53,7 @@ public:
 		return pComMgr;
 	}
 };
-//³õÊ¹»¯×ÊÔ´¼ÓÔØÂ·¾¶
+//åˆä½¿åŒ–èµ„æºåŠ è½½è·¯å¾„
 void InitDir(TCHAR *Path=NULL);
 
 void InitSystemRes(SApplication *theApp, SComMgr *pComMgr);
